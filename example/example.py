@@ -2,9 +2,10 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers
-
+import os
+os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
 # Model / data parameters
-with tf.device()
+
 num_classes = 10
 input_shape = (28, 28, 1)
 
