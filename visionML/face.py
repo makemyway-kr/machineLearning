@@ -18,13 +18,13 @@ def image_load_and_face(imagefileDir):
         try:
             faces, confidences = cv.detect_face(img,enable_gpu = True)
             genders = []
-            for (x, y, x2, y2), conf in zip(faces, confidences):
+            #for (x, y, x2, y2), conf in zip(faces, confidences):
         		# 확률 표시
                 #cv2.putText(img, str(conf), (x,y-10), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
         		# 얼굴위치 bbox 그리기
                 #cv2.rectangle(img, (x, y), (x2, y2), (0, 255, 0), 2)
-                label , gconf = cv.detect_gender(img[y:y2,x:x2],enable_gpu = True)
-                genders.append(label[np.argmax(gconf)])
+                #label , gconf = cv.detect_gender(img[y:y2,x:x2],enable_gpu = True)
+                #genders.append(label[np.argmax(gconf)])
 
             # 영상 출력
             #cv2.namedWindow('image',cv2.WINDOW_NORMAL)
@@ -34,10 +34,15 @@ def image_load_and_face(imagefileDir):
             #cv2.destroyAllWindows()
             print(confidences)
             #type change from int32 into normal integer
-            for f in range(len(faces)):
-                 for i in range(len(faces[f])):
-                     faces[f][i] = int(faces[f][i])
-            result[image] = {'face':faces,'confidence':[float(c) for c in confidences], 'gender' : genders}
+            max = float(0.0)
+            face = []
+            for i in range(len(faces)):
+                if confidences[i] > max:
+                    max = confidences[i]
+                    face = faces[i]
+            for i in range(len(face)):
+                face[i] = int(face[i])
+            result[image] = {'face':face,'confidence':float(max)}
         except Exception as ex:
             print(ex)
             continue
