@@ -1,22 +1,24 @@
+import multiprocessing
 import cvlib as cv
 import cv2
 import os
 import json
 import numpy as np
 from glob import glob
-def image_load_and_face(imagefileDir):
-    os.add_dll_directory("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-    images = glob(r'D:\vision_data\data1\images\*.jpg')
+import multiprocessing
+def image_load_and_face(images):
     result = {}
+    count = 0
     for image in images:
+        print(count)
+        count+=1
         try:
             img = cv2.imread(image)
         except Exception as ex:
             continue
         # 얼굴인식
         try:
-            faces, confidences = cv.detect_face(img,enable_gpu = True)
+            faces, confidences = cv.detect_face(img)
             genders = []
             #for (x, y, x2, y2), conf in zip(faces, confidences):
         		# 확률 표시
@@ -48,7 +50,7 @@ def image_load_and_face(imagefileDir):
             continue
 
         
-    with open('./result.json','w',encoding='utf-8') as f:
+    with open('/mnt/hdd/Github/2022_Class/visionML/result.json','w',encoding='utf-8') as f:
         f.write(json.dumps(result,ensure_ascii=False,indent=4))
         '''
         print(i,confidences)
@@ -63,4 +65,7 @@ def image_load_and_face(imagefileDir):
                 cv2.imwrite('./data/unmasked/'+i.split('\\')[4],only_face)
         count+=1'''
 
-image_load_and_face('D:\vision_data\data1\images\*.jpg')
+if __name__ == '__main__':
+    imageglob = glob(r'/mnt/hdd/vision_data/data1/images/*.jpg')
+    image_load_and_face(imageglob)
+    
