@@ -50,7 +50,7 @@ def image_load_and_face(images):
             continue
 
         
-    with open('/mnt/hdd/Github/2022_Class/visionML/result.json','w',encoding='utf-8') as f:
+    with open('D:/Github/2022_Class/visionML/result.json','w',encoding='utf-8') as f:
         f.write(json.dumps(result,ensure_ascii=False,indent=4))
         '''
         print(i,confidences)
@@ -66,6 +66,6 @@ def image_load_and_face(images):
         count+=1'''
 
 if __name__ == '__main__':
-    imageglob = glob(r'/mnt/hdd/vision_data/data1/images/*.jpg')
+    imageglob = glob(r'D:/vision_data/data1/images/*.jpg')
     image_load_and_face(imageglob)
     
