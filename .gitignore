@@ -3,3 +3,8 @@ vision/server/node_modules/*
 Comgongteuk/calcul/*
 data/*
 visionML/model.M1/*
+visionML/model.M1_2/variables/variables.data-00000-of-00001
+visionML/model.M1_2/variables/variables.index
+visionML/model.M1_2/saved_model.pb
+visionML/model.M1_2/keras_metadata.pb
+visionML/model_M1_2.h5

@@ -20,8 +20,8 @@ with tf.device("/GPU:0"):
         face_whole = json.load(f)
     face_result_data = list(face_whole.keys()) 
     #이미지 리사이징
-    image_array = np.float32(np.zeros((2000,224,224,3)))#램 제한으로 인한 데이터 수 줄임
-    labels = np.float64(np.zeros((2000,1)))
+    image_array = np.float32(np.zeros((2000,256,256,3)))#램 제한으로 인한 데이터 수 줄임
+    labels = np.float64(np.zeros((2000,4)))
     count = 0
     for k in face_result_data: #라벨과 이미지 담기
         if count == 2000:
@@ -32,12 +32,13 @@ with tf.device("/GPU:0"):
             coordinate = face_whole[k]['face']
             if len(coordinate) != 0 :
                 #cv2.imwrite(baseDir+'onlyMask/'+str(k.split('/')[6]),face[coordinate[1]:coordinate[3],coordinate[0]: coordinate[2] , :])
-                img = load_img(baseDir + 'onlyMask/'+str(k.split('/')[6]),target_size = (224 , 224))
+                img = load_img(baseDir + 'onlyMask/'+str(k.split('/')[6]),target_size = (256 , 256))
                 i = img_to_array(img)
                 i = np.expand_dims(i,axis = 0)
                 i = preprocess_input(i)
                 image_array[count,:,:,:] = i
-                labels[count] = int(k.split('_')[2][0]) #이미지 이름에 라벨이 있음.
+                this_label = int(k.split('_')[2][0])
+                labels[count][this_label-1] = 1
             else:
                 continue
         except Exception as ex:
@@ -55,18 +56,18 @@ with tf.device("/GPU:0"):
     trainLabel = labels[0:trainImgCount]
     testLabel = labels[trainImgCount:]
 
-    imgShape = (224,224,3)
+    imgShape = (256,256,3)
 
     resnetBase = ResNet50(input_shape = imgShape , weights = 'imagenet',include_top = False)
-    resnetBase.trainable = False
+    resnetBase.trainable = True
     resnetBase.summary()
 
     fL = Flatten()
-    dL1 = Dense(128,activation = 'relu')
+    dL1 = Dense(256,activation = 'relu')
     bnL1 = BatchNormalization()
-    dL2 = Dense(64,activation = 'relu')
+    dL2 = Dense(256,activation = 'relu')
     bnL2 = BatchNormalization()
-    dL3 = Dense(16,activation = 'relu')
+    dL3 = Dense(256,activation = 'relu')
     bnL3 = BatchNormalization()
     dL4 = Dense(4,activation = tf.keras.activations.softmax) #라벨과 같은 4개로 분류, softmax사용
 
@@ -80,11 +81,11 @@ with tf.device("/GPU:0"):
         dL4,]
     )
     learningRate = 0.00001
-    model.compile(optimizer=tf.keras.optimizers.Adam(lr=learningRate), loss = tf.keras.losses.MeanSquaredError() , metrics = ['accuracy'])
+    model.compile(optimizer=tf.keras.optimizers.Adam(lr=learningRate), loss = tf.keras.losses.CategoricalHinge() , metrics = ['accuracy',tf.keras.metrics.AUC()])
     model.summary()
 
-    model.fit(trainImg,trainLabel,epochs = 10000 , batch_size  = 10 , validation_data = (testImg,testLabel))
+    model.fit(trainImg,trainLabel,epochs = 60 , batch_size  = 10 , validation_data = (testImg,testLabel))
 
-    model.save("model.M1_2")
+    model.save("model_M1_2.h5")
 
 
