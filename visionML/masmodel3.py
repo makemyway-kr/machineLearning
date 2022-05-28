@@ -92,7 +92,7 @@ with tf.device("/GPU:0"):
     model.compile(optimizer=tf.keras.optimizers.Adam(lr=learningRate), loss = tf.keras.losses.CategoricalHinge() , metrics = ['accuracy',tf.keras.metrics.AUC()])
     model.summary()
 
-    model.fit(trainImg,trainLabel,epochs = 80 , batch_size  = 10 , validation_data = (testImg,testLabel))
+    model.fit(trainImg,trainLabel,epochs = 10 , batch_size  = 10 , validation_data = (testImg,testLabel))
 
     model.save("model_M1_3_Densenet.h5")
 
