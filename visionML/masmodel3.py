@@ -6,9 +6,10 @@ import cv2
 import os
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Flatten, BatchNormalization
-from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+from tensorflow.keras.applications.resnet50 import ResNet50 #, preprocess_input
 from tensorflow.keras.applications import EfficientNetB0
-from tensorflow.keras.applications import DenseNet121
+from tensorflow.keras.applications.densenet import DenseNet121 , preprocess_input
+
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 baseDir = '/mnt/hdd/vision_data/'
@@ -33,7 +34,7 @@ with tf.device("/GPU:0"):
             #face = cv2.imread(k)
             coordinate = face_whole[k]['face']
             if len(coordinate) != 0 :
-                #cv2.imwrite(baseDir+'onlyMask/'+str(k.split('/')[6]),face[coordinate[1]:coordinate[3],coordinate[0]: coordinate[2] , :])
+                #cv2.imwrite(baseDir+'onlyMask/'+str(k.split('/')[6]),face[coordinate[1]:coordinate[3],coordinate[0]: coordinate[2] , :])   
                 img = load_img(baseDir + 'onlyMask/'+str(k.split('/')[6]),target_size = (256 , 256))
                 i = img_to_array(img)
                 i = np.expand_dims(i,axis = 0)
@@ -93,6 +94,6 @@ with tf.device("/GPU:0"):
 
     model.fit(trainImg,trainLabel,epochs = 80 , batch_size  = 10 , validation_data = (testImg,testLabel))
 
-    model.save("model_M1_3_D_pA.h5")
+    model.save("model_M1_3_Densenet.h5")
 
 

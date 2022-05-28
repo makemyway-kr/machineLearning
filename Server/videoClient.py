@@ -16,7 +16,7 @@ videoStream.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 
 while(True):
-    time.sleep(0.5) #0.5초마다 비디오 인풋전송
+    time.sleep(1) #1초마다 비디오 인풋전송
     status , frame = videoStream.read()
 
     if not status:
