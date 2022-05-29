@@ -20,22 +20,24 @@ def image_load_and_face(images):
         try:
             faces, confidences = cv.detect_face(img)
             genders = []
-            #for (x, y, x2, y2), conf in zip(faces, confidences):
+            for (x, y, x2, y2), conf in zip(faces, confidences):
         		# 확률 표시
-                #cv2.putText(img, str(conf), (x,y-10), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
+                cv2.putText(img, str(conf), (x,y-10), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
         		# 얼굴위치 bbox 그리기
-                #cv2.rectangle(img, (x, y), (x2, y2), (0, 255, 0), 2)
+                cv2.rectangle(img, (x, y), (x2, y2), (0, 255, 0), 2)
+                break
                 #label , gconf = cv.detect_gender(img[y:y2,x:x2],enable_gpu = True)
                 #genders.append(label[np.argmax(gconf)])
 
             # 영상 출력
-            #cv2.namedWindow('image',cv2.WINDOW_NORMAL)
-            #cv2.resizeWindow('image',500,700)
-            #cv2.imshow('image', img)
-            #key = cv2.waitKey(0)
-            #cv2.destroyAllWindows()
+            cv2.namedWindow('image',cv2.WINDOW_NORMAL)
+            cv2.resizeWindow('image',500,700)
+            cv2.imshow('image', img)
+            key = cv2.waitKey(0)
+            cv2.destroyAllWindows()
             print(confidences)
             #type change from int32 into normal integer
+            '''
             max = float(0.0)
             face = []
             for i in range(len(faces)):
@@ -44,14 +46,14 @@ def image_load_and_face(images):
                     face = faces[i]
             for i in range(len(face)):
                 face[i] = int(face[i])
-            result[image] = {'face':face,'confidence':float(max)}
+            result[image] = {'face':face,'confidence':float(max)}'''
         except Exception as ex:
             print(ex)
             continue
-
         
-    with open('D:/Github/2022_Class/visionML/result.json','w',encoding='utf-8') as f:
-        f.write(json.dumps(result,ensure_ascii=False,indent=4))
+        
+    #with open('D:/Github/2022_Class/visionML/result.json','w',encoding='utf-8') as f:
+        #f.write(json.dumps(result,ensure_ascii=False,indent=4))
         '''
         print(i,confidences)
         for idx , f in enumerate(faces):
@@ -66,6 +68,6 @@ def image_load_and_face(images):
         count+=1'''
 
 if __name__ == '__main__':
-    imageglob = glob(r'D:/vision_data/data1/images/*.jpg')
+    imageglob = glob(r'./data/*.jpg')
     image_load_and_face(imageglob)
     

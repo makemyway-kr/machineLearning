@@ -6,10 +6,10 @@ import cv2
 import os
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Flatten, BatchNormalization
-from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+#from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-
+from tensorflow.keras.applications.efficientnet import preprocess_input
 baseDir = '/mnt/hdd/vision_data/'
 with tf.device("/GPU:0"):
     images = glob(baseDir+'data1/images/*.jpg')
