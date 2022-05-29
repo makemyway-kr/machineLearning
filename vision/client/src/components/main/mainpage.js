@@ -23,7 +23,9 @@ const MainPage = () => {
     useEffect(() => {
         socket.join('video connection');
         socket.on('processResult' , (data) => {
-            
+            setImage(data);
         })
     })
 }
+
+export default MainPage;
