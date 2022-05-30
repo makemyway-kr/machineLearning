@@ -15,7 +15,7 @@ encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 # 영상 처리 서버
 
 # 모델 import
-model = load_model('model_M1_3_Densenet.h5')
+model = load_model('../../visionML/model_M1_3_Densenet.h5')
 
 # 소켓 연결
 videoSocket = socketio.Client()
