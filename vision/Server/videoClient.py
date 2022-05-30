@@ -1,5 +1,4 @@
 import base64
-from itsdangerous import base64_encode
 import cv2
 import socketio
 import time
@@ -7,7 +6,7 @@ import time
 
 #소켓 연결
 videoSocket = socketio.Client()
-videoSocket.connect('') #서버 주소
+videoSocket.connect('http://192.168.0.9:6666') #서버 주소
 
 #영상 input
 videoStream = cv2.VideoCapture(0)
@@ -22,8 +21,11 @@ while(True):
     if not status:
         print("영상 입력이 없음")
         break
-    res , frame = cv2.imencode('.jpg',frame , encode_param)
-    b64_encoded = base64.encode(frame)
+    res , encodeframe = cv2.imencode('.jpg', frame, encode_param)
+    cv2.imshow("video",frame)
+    key = cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    b64_encoded = base64.b64encode(encodeframe)
     videoSocket.emit('videoIncoming',b64_encoded)
 videoSocket.disconnect()
 
