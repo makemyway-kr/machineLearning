@@ -10,7 +10,7 @@ io.sockets.on('connection', (socket) => {
     socket.join('video connection');
     socket.on('videoIncoming', (videoData) => {
         console.log('video incoming');
-        io.sockets.in('video connection').emit('videoProcess', videoData);
+        io.emit('videoProcess', videoData);
     });
 
     socket.on('processResult', (resultData) => {

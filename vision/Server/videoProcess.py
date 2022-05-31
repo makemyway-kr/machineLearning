@@ -35,7 +35,7 @@ def videoDecode(data):
     global frame
     frame = data
 
-@videoSocket.on('videoProcess' , namespace = ['video connection'])
+@videoSocket.on('videoProcess')
 def isMasked(data):
     with tf.device('/GPU:0'):
         videoDecode(data)
