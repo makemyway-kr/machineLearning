@@ -68,9 +68,9 @@ def isMasked(data):
                     res, ef = cv2.imencode('.jpg', face_only, encode_param)
                     encoded_frame = base64.b64encode(ef)
                     videoSocket.emit('noMask', encoded_frame)
-                    cv2.imshow('noMASKInFRAME', frame)
-                    cv2.waitKey(0)
-                    cv2.destroyAllWindows()
+                    #cv2.imshow('noMASKInFRAME', frame)
+                    #cv2.waitKey(0)
+                    #cv2.destroyAllWindows()
 
 '''
 with tf.device("/GPU:0"):

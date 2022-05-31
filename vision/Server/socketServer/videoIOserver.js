@@ -13,8 +13,13 @@ io.sockets.on('connection', (socket) => {
         io.emit('videoProcess', videoData);
     });
 
-    socket.on('processResult', (resultData) => {
+    socket.on('noMask', (resultData) => {
         console.log(resultData);
-        io.sockets.in('video conneciton').emit('result', resultData);
+        io.sockets.in('video conneciton').emit('result', {noMask :resultData});
+    })
+
+    socket.on('partialMask',(resultData) =>{
+        console.log(resultData);
+        io.sockets.in('video connection').emit('result', {partialMask : resultData})
     })
 });
