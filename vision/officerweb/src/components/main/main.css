@@ -9,3 +9,10 @@
     justify-content: center;
     font-size: 15pt;
 }
+
+.maskImg{
+    width : 70%;
+    height : 60%;
+    margin-left : 20%;
+    object-fit: cover;
+}
