@@ -56,13 +56,14 @@ def isMasked(data):
 
                 prediction = model.predict(i)
                 print(prediction)
-                if prediction < 1.5:  # 마스크 착용
+                bestPrediction = np.argmax(prediction)
+                if bestPrediction == 0 :  # 마스크 착용
                     print('masked')
-                elif prediction >= 1.5 and prediction < 3.5:  # 마스크 부분착용(턱스크 등)
+                elif bestPrediction == 1 or bestPrediction == 2:  # 마스크 부분착용(턱스크 등)
                     res, ef = cv2.imencode('.jpg', face_only, encode_param)
                     encoded_frame = base64.encode(ef)
                     videoSocket.emit('partialMask', encoded_frame)
-                elif prediction >= 3.5:  # 마스크 미착용 승객
+                elif bestPrediction == 3:  # 마스크 미착용 승객
                     res, ef = cv2.imencode('.jpg', face_only, encode_param)
                     encoded_frame = base64.encode(ef)
                     videoSocket.emit('noMask', encoded_frame)
