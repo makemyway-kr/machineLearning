@@ -19,7 +19,7 @@ model = load_model('../../visionML/model_M1_3_Densenet.h5')
 
 # 소켓 연결
 videoSocket = socketio.Client()
-videoSocket.connect('http://localhost:6666')  # 서버 주소
+videoSocket.connect('http://localhost:5555')  # 서버 주소
 frame = 0
 
 # 비디오 디코딩 함수

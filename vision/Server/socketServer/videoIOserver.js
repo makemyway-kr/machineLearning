@@ -1,7 +1,7 @@
 import { Server } from 'socket.io'
 import http from 'http';
 //비디오 중계용 js서버
-const server = http.createServer().listen(6666);
+const server = http.createServer().listen(5555);
 
 var io = new Server(server)
 
@@ -15,11 +15,11 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('noMask', (resultData) => {
         console.log(resultData);
-        io.sockets.in('video conneciton').emit('result', {noMask :resultData});
+        io.sockets.emit('result', ['noMask' ,resultData]);
     })
 
     socket.on('partialMask',(resultData) =>{
         console.log(resultData);
-        io.sockets.in('video connection').emit('result', {partialMask : resultData})
+        io.sockets.emit('result', ['partialMask' , resultData])
     })
 });
