@@ -55,7 +55,7 @@ def isMasked(data):
                 i = preprocess_input(i)
 
                 prediction = model.predict(i)
-
+                print(prediction)
                 if prediction < 1.5:  # 마스크 착용
                     print('masked')
                 elif prediction >= 1.5 and prediction < 3.5:  # 마스크 부분착용(턱스크 등)
@@ -106,4 +106,5 @@ with tf.device("/GPU:0"):
         if cv2.waitkey(1) > 0:
             break
 '''
+videoSocket.wait()
 videoSocket.disconnect()

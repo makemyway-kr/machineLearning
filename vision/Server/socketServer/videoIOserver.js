@@ -14,6 +14,7 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('processResult', (resultData) => {
+        console.log(resultData);
         io.sockets.in('video conneciton').emit('result', resultData);
     })
 });
