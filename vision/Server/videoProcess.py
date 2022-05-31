@@ -62,11 +62,11 @@ def isMasked(data):
                     print('masked')
                 elif bestPrediction == 1 or bestPrediction == 2:  # 마스크 부분착용(턱스크 등)
                     res, ef = cv2.imencode('.jpg', face_only, encode_param)
-                    base64.encode(ef,encoded_frame)
+                    encoded_frame = base64.b64encode(ef)
                     videoSocket.emit('partialMask', encoded_frame)
                 elif bestPrediction == 3:  # 마스크 미착용 승객
                     res, ef = cv2.imencode('.jpg', face_only, encode_param)
-                    base64.encode(ef,encoded_frame)
+                    encoded_frame = base64.b64encode(ef)
                     videoSocket.emit('noMask', encoded_frame)
                     cv2.imshow('noMASKInFRAME', frame)
                     cv2.waitKey(0)
