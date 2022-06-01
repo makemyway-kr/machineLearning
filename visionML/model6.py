@@ -9,7 +9,8 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, Flatten, BatchNormalization
 from tensorflow.keras.applications.resnet50 import ResNet50 #, preprocess_input
 from tensorflow.keras.applications import EfficientNetB0
-from tensorflow.keras.applications.densenet import DenseNet121 , preprocess_input
+from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2 #, preprocess_input
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 baseDir = '/mnt/hdd/vision_data/'
@@ -72,6 +73,10 @@ with tf.device("/GPU:0"):
     denseNetBase = DenseNet121(input_shape = imgShape , weights = 'imagenet' , include_top = False, classes = 4, pooling = 'avg')
     denseNetBase.trainable = True
     denseNetBase.summary()
+    mnBase = MobileNetV2(input_shape = imgShape, weights = 'imagenet' , include_top = False , classes = 4, pooling = 'avg')
+    mnBase.trainable = True
+    mnBase.summary()
+
     fL = Flatten()
     dL1 = Dense(256,activation = 'relu')
     bnL1 = BatchNormalization()
@@ -90,12 +95,12 @@ with tf.device("/GPU:0"):
         bnL2,
         dL4,]
     )
-    learningRate = 0.00001
-    model.compile(optimizer=tf.keras.optimizers.Adam(lr=learningRate), loss=[tfa.losses.SigmoidFocalCrossEntropy() ,tf.keras.losses.MeanSquaredError() , tf.keras.losses.CategoricalHinge()] , metrics = ['accuracy',tf.keras.metrics.AUC()])
+    learningRate = 0.0001
+    model.compile(optimizer=tf.keras.optimizers.Adam(lr=learningRate), loss=[tf.keras.losses.MeanSquaredError() , tf.keras.losses.CategoricalHinge()] , metrics = ['accuracy',tf.keras.metrics.AUC(curve = 'PR')])
     model.summary()
 
-    model.fit(trainImg,trainLabel,epochs = 15 , batch_size  = 10 , validation_data = (testImg,testLabel))
+    model.fit(trainImg,trainLabel,epochs = 20 , batch_size  = 10 , validation_data = (testImg,testLabel))
 
-    model.save("model_M1_3_Densenet_FOCAL_MSE_HINGE.h5")
+    model.save("Densenet_MSE_HINGE.h5")
 
 
