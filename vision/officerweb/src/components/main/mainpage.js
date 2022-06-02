@@ -5,7 +5,7 @@ import socketIoClient from 'socket.io-client';
 import { Buffer } from 'buffer';
 import './main.css';
 
-const socketServer = 'http://192.168.0.9:5555'; //서버 주소
+const socketServer = 'http://15.164.111.113:5555'; //서버 주소
 
 const socket = socketIoClient.connect(socketServer,{ transports: ['websocket', 'polling', 'flashsocket'] });
 
