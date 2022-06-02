@@ -1,4 +1,5 @@
 import base64
+from time import time #FPS측정용
 from configparser import Interpolation
 import cvlib as cv
 import cv2
@@ -19,7 +20,7 @@ model = load_model('../../visionML/model_M1_3_Densenet.h5')
 
 # 소켓 연결
 videoSocket = socketio.Client()
-videoSocket.connect('http://localhost:5555')  # 서버 주소
+videoSocket.connect('http://15.164.111.113:5555')  # 서버 주소
 frame = 0
 
 # 비디오 디코딩 함수
@@ -53,8 +54,9 @@ def isMasked(data):
                 i = img_to_array(face_resized)
                 i = np.expand_dims(i, axis=0)
                 i = preprocess_input(i)
-
+                startTime = time()
                 prediction = model.predict(i)
+                fintTime = time()
                 print(prediction)
                 bestPrediction = np.argmax(prediction)
                 encoded_frame = ''
@@ -73,6 +75,7 @@ def isMasked(data):
                     #cv2.imshow('noMASKInFRAME', frame)
                     #cv2.waitKey(0)
                     #cv2.destroyAllWindows()
+                print((fintTime-startTime)/1000,"seconds")
 
 '''
 with tf.device("/GPU:0"):

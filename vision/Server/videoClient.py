@@ -6,7 +6,7 @@ import time
 
 #소켓 연결
 videoSocket = socketio.Client()
-videoSocket.connect('http://192.168.0.9:5555') #서버 주소
+videoSocket.connect('http://15.164.111.113:5555') #서버 주소
 
 #영상 input
 videoStream = cv2.VideoCapture(0)
