@@ -1,5 +1,5 @@
 import base64
-from time import time #FPS측정용
+import time #FPS측정용
 from configparser import Interpolation
 import cvlib as cv
 import cv2
@@ -16,7 +16,7 @@ encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 # 영상 처리 서버
 
 # 모델 import
-model = load_model('../../visionML/model_M1_3_Densenet.h5')
+model = load_model('../MobilenetV2_MSE_HINGE.h5')
 
 # 소켓 연결
 videoSocket = socketio.Client()
@@ -54,9 +54,9 @@ def isMasked(data):
                 i = img_to_array(face_resized)
                 i = np.expand_dims(i, axis=0)
                 i = preprocess_input(i)
-                startTime = time()
+                startTime = time.time()
                 prediction = model.predict(i)
-                fintTime = time()
+                fintTime = time.time()
                 print(prediction)
                 bestPrediction = np.argmax(prediction)
                 encoded_frame = ''
