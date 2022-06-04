@@ -16,11 +16,11 @@ encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 # 영상 처리 서버
 
 # 모델 import
-model = load_model('../MobilenetV2_MSE_HINGE.h5')
+model = load_model('../MobilenetV2_MSE_HINGE.h5') #모델 선택
 
 # 소켓 연결
 videoSocket = socketio.Client()
-videoSocket.connect('http://15.164.111.113:5555')  # 서버 주소
+videoSocket.connect('http://15.164.111.113:5555')  # 웹소켓 서버 주소
 frame = 0
 
 # 비디오 디코딩 함수

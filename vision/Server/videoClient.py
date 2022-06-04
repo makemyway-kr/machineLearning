@@ -17,15 +17,15 @@ encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 while(True):
     time.sleep(1) #1초마다 비디오 인풋전송
     status , frame = videoStream.read()
-
+    #영상 읽어들여서 영상 입력이 있다면 전송
     if not status:
         print("영상 입력이 없음")
         break
+    #이미지를 전송하기 위해 인코딩 처리.
     res , encodeframe = cv2.imencode('.jpg', frame, encode_param)
     cv2.imshow("video",frame)
-    key = cv2.waitKey(0)
-    cv2.destroyAllWindows()
     b64_encoded = base64.b64encode(encodeframe)
+    #소켓 중계서버로 송신.
     videoSocket.emit('videoIncoming',b64_encoded)
 videoSocket.disconnect()
 
