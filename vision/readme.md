@@ -8,3 +8,6 @@ videoClient.py : 비디오 송신용 프로그램. python videoClient.py로 시�
 videoProcess.py : 비디오 처리 및 마스크 착용 여부 분류기(ML서버)
 modelLearning.py : 이미지 분류기 학습용 코드
 requirements.txt에 들어있는 모듈들을 pip install -r requirements.txt 로 설치.
+
+logs : 학습 과정 로그, tensorboard --logdir=./logs/fit로 tensorboard 실행 후 
+브라우저를 통해 localhost:6006에 접속하면 그래프 및 정보 확인 가능.
