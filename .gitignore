@@ -13,3 +13,6 @@ visionML/model_M1_3_E.h5
 visionVenv
 visionML/vision/Server/socketServer/node_modules/*
 컴퓨터비전응용_20192698심원준_최종과제.zip
+MASK_DETECTOR/vision/*
+Mask_DETECTOR\vision\src\*
+Mask_DETECTOR/vision/src/node-v18.0.0/benchmark/buffers/buffer-concat.js
