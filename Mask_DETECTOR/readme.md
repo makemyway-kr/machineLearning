@@ -22,3 +22,6 @@ requirements.txt에 들어있는 모듈들을 pip install -r requirements.txt �
 <br>
 logs : 학습 과정 로그, tensorboard --logdir=./logs/fit로 tensorboard 실행 후 <br>
 브라우저를 통해 localhost:6006에 접속하면 그래프 및 정보 확인 가능.<br>
+
+
+https://bskyvision.com/1082  해당 소스코드를 참고하여 진행하였음.
